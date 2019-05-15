@@ -1,0 +1,68 @@
+server: 
+  port: 8002
+#开启断路器，Feign接口API的实现类方法处理   
+feign: 
+  hystrix:
+    enabled: true
+    
+hystrix:
+  command:
+    default:  #default全局有效，service id指定应用有效
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制,为true,则超时作为熔断根据
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 #断路器超时时间，默认1000ms
+    
+spring: 
+  application: 
+    name: chwl-provider-order         #很重要，很重要，很重要，这是微服务向外部暴露的微服务的名字
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://xxx.xx.xx.xx:5307/chwl?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: admin
+  redis: 
+#    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: 
+    timeout: 10000
+    lettuce:
+          pool:
+            minIdle: 0
+            maxIdle: 10
+            maxWait: 10000
+            max-active: 10
+    sentinel:
+      master: master-6379
+      nodes: 127.0.0.1:26379,127.0.0.1:26380,127.0.0.1:26381
+#    cluster:
+#      nodes:
+#        - 192.168.91.5:9001
+#        - 192.168.91.5:9002
+#        - 192.168.91.5:9003
+#        - 192.168.91.5:9004
+#        - 192.168.91.5:9005
+#        - 192.168.91.5:9006
+    
+mybatis: 
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  #typeAliasesPackage: com.ypp.springcloud.entites
+  mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
+mapper:
+  mappers: com.chwl.cn.basemapper.BaseMapper
+  identity: mysql
+  
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url: 
+      #defaultZone: http://localhost:2001/eureka    #这个地址就是EurekaServer注册中心的地址
+       defaultZone: http://ypp:admin@eureka2001.com:2001/eureka/,http://ypp:admin@eureka2002.com:2002/eureka/
+  instance: 
+    instance-id: chwl-provider-order
+    prefer-ip-address: true     #访问路径可以显示IP地址

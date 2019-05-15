@@ -1,0 +1,20 @@
+server:
+  port: 2001
+spring:
+  security:
+    user:
+      name: ypp
+      password: admin
+#      roles:
+#        user
+        
+eureka:
+  instance:
+    #hostname: localhost #eureka服务端的实例名称  本机
+    hostname: eureka2001.com
+  client:
+    register-with-eureka: false #false表示不向注册中心注册自己，我就是注册中心
+    fetch-registry: false  #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机）。
+      defaultZone: http://ypp:admin@eureka2001.com:2001/eureka/

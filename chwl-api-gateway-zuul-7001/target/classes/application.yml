@@ -1,0 +1,27 @@
+server: 
+  port: 7001
+#服务的名称
+spring:
+  application:
+    name: chwl-api-gateway-zuul-7001
+#  main:
+#    allow-bean-definition-overriding: true
+    
+eureka: 
+  client: #客户端注册进eureka服务列表内
+    service-url: 
+      #defaultZone: http://localhost:2001/eureka    #这个地址就是EurekaServer注册中心的地址
+       defaultZone: http://ypp:admin@eureka2001.com:2001/eureka/,http://ypp:admin@eureka2002.com:2002/eureka/
+  instance: 
+    instance-id: chwl-api-gateway-zuul-7001
+    prefer-ip-address: true     #访问路径可以显示IP地址
+    
+#自定义路由映射    
+zuul: 
+  routes: 
+    chwl-provider-product: /apigateway/product/**
+    chwl-provider-order: /apigateway/order/**
+  #统一入口为上面的配置，其他入口忽略
+  ignored-patterns: /*-provider-*/**
+  #忽略整个服务，对外提供接口
+  #ignored-services: chwl-provider-product

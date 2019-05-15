@@ -1,0 +1,5 @@
+com\chwl\cn\entity\IdEntity.class
+com\chwl\cn\entity\product\ProductEntity.class
+com\chwl\cn\entity\member\BaseEntity.class
+com\chwl\cn\entity\order\OrderEntity.class
+com\chwl\cn\entity\member\MemberEntity.class
